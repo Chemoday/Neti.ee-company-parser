@@ -8,10 +8,11 @@ driver = webdriver.PhantomJS(service_args=['--ignore-ssl-errors=true', '--ssl-pr
 class Parser(object):
 
 
-    def get_neti_company_page_html(self, url):
+    def __get_neti_company_page_html(self, url):
         """
         Working only with http://www.neti.ee/visiitkaart/#####
-        open headless browser and exececuting js element
+        open headless browser, execute js element
+        and returning full html page source ( with info under js script )
         """
         driver.get(url)
         try:
@@ -22,11 +23,14 @@ class Parser(object):
             return None
         return(driver.page_source)
 
-    def parse_neti_company_page(self, html):
+    def parse_neti_company_page(self, url):
+        html = self.__get_neti_company_page_html(url=url)
         if not html:
-            return
+            return None
+        html = BeautifulSoup(html, 'html.parser')
+        company_data = {}
 
-        html_page = BeautifulSoup(html, 'html.parser')
+        return company_data
         #TODO add page parser
 
 
