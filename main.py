@@ -7,8 +7,10 @@ def parse_neti():
     url = 'http://www.neti.ee/cgi-bin/teema/TERVIS/Meditsiin/Hambaravi/'
 
     parser.get_neti_companies_list(url=url)
-    for company in Company.COMPANY_LIST:
-        company_data = parser.parse_neti_company_page(url=url)
+    for company in Company.COMPANY_LIST[0:2]:
+        #company_data = parser.parse_neti_company_page(url=url)
+        company_data = None
+        print(company)
         if company_data:
             company.reg_code = company_data['reg_code']
             company.KMKR = company_data['KMKR']
@@ -27,4 +29,6 @@ def db_add_neti():
 
 def run_neti_parsing():
     parse_neti()
-    db_add_neti()
+    #db_add_neti()
+
+run_neti_parsing()

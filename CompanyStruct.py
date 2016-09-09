@@ -16,10 +16,12 @@ class Company(object):
 
     def __repr__(self):
         return "Name: {name}\n" \
+               "Page: {website}\n" \
+               "Neti_ID: {neti_id}\n" \
                "Reg_Code:{code}\n" \
                "Address: {address}\n" \
                "Email: {email}\n" \
-               "Page: {link}".format(name=self.name,code=self.reg_code,
+               .format(name=self.name,code=self.reg_code,
                                      address=self.address, email=self.email,
-                                     link=self.link )
+                                     website=self.website, neti_id = self.neti_id )
 

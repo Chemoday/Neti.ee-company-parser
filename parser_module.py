@@ -44,14 +44,17 @@ class Parser(object):
         :return:
         """
         driver.get(url)
-        html_page = driver.page_source
-        data_raw = html_page.findAll('h3', class_='name inline-block')
-        for data in data_raw:
-            company_raw = data.findAll('a', class_="out")
-            for company in company_raw:
-                company_name = company.text # Text of <a> tag
-                company_website = company['href'] #content in <a href="website">
-                # print("\n==============\n"
-                #       "Company: {0}\n"
-                #       "Website: {1}".format(company_name, company_website))
-                company_obj = Company(name=company_name, website=company_website, neti_id=neti_id)
+        html_page = BeautifulSoup(driver.page_source, 'html.parser')
+        company_data_list = html_page.findAll('li', class_='result-item company fc-bi-ok')
+        for company_data_block in company_data_list:
+            company_site_and_name = company_data_block.find('a', class_="out")
+            company_name = company_site_and_name.getText() # Text of <a> tag
+            company_website = company_site_and_name['href'] #content in <a href="website">
+
+            company_neti_id_raw = company_data_block.find('div', class_='real-expand fc-tabs')
+            company_neti_id = company_neti_id_raw['data-bizinfo-reg-code']
+
+            # print("\n==============\n"
+            #       "Company: {0}\n"
+            #       "Website: {1}".format(company_name, company_website))
+            Company(name=company_name, website=company_website, neti_id=company_neti_id)
