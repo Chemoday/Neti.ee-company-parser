@@ -16,7 +16,7 @@ class Company(object):
 
     def __repr__(self):
         return "Name: {name}\n" \
-               "Page: {website}\n" \
+               "Site: {website}\n" \
                "Neti_ID: {neti_id}\n" \
                "Reg_Code:{code}\n" \
                "Address: {address}\n" \
