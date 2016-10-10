@@ -1,4 +1,4 @@
-from parser_module import Parser
+from Parser import Parser
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from bs4 import BeautifulSoup
@@ -19,4 +19,10 @@ def test_single_page_parsing():
     url = 'http://www.neti.ee/visiitkaart/80200210'
     data = parser.parse_neti_company_page(url=url)
     print(data)
-test_single_page_parsing()
+
+
+url = 'http://www.neti.ee/cgi-bin/teema/MEELELAHUTUS_JA_HOBID/E-postkaardid/'
+category_lst = url.split('/teema/')[1].split('/')
+category = category_lst
+sub_category = '-'.join(category_lst[1:])
+print(sub_category)

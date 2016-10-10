@@ -7,10 +7,12 @@ class Company(object):
 
 
 
-    def __init__(self, name, website, neti_id):
+    def __init__(self, name, website, neti_id, category, sub_category=''):
         self.name = name
         self.website = website
         self.neti_id = neti_id
+        self.category = category
+        self.sub_category = sub_category
         Company.COMPANY_LIST.append(self)
 
 
