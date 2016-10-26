@@ -2,6 +2,7 @@ __author__ = 'chemoday'
 import datetime
 import peewee
 db = peewee.SqliteDatabase('company.db')
+db.connect()
 
 class Utils(object):
     total_parsed=0
@@ -20,7 +21,6 @@ class Company(peewee.Model):
 
 
 def create_db():
-    db.connect()
     if not Company.table_exists():
         Company.create_table()
 
@@ -32,6 +32,7 @@ def company_exist(company):
         company = Company.get(Company.name==company.name)
         return True
     except Company.DoesNotExist:
+        print('Company:{0} NOT EXIST| email:{1}'.format(company.name, company.email))
         return False
 
 def add_company(company):
@@ -42,7 +43,7 @@ def add_company(company):
                               category=company.category, sub_category=company.sub_category)
         row.save(force_insert=True)
         Utils.total_parsed+=1
-        print("Saved: {0}| Session total:{1}".format(company.name, Utils.total_parsed))
+        print("Saved: {0} | Session total:{1}".format(company.name, Utils.total_parsed))
     except peewee.IntegrityError:
         print("Eror with: {0}".format(company.name))
 

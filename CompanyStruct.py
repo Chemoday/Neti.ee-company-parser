@@ -13,6 +13,7 @@ class Company(object):
         self.neti_id = neti_id
         self.category = category
         self.sub_category = sub_category
+        self.neti_url = 'http://www.neti.ee/visiitkaart/' + str(neti_id)
         Company.COMPANY_LIST.append(self)
 
 

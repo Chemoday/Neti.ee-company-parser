@@ -1,35 +1,16 @@
 from Parser import Parser
-from CompanyStruct import Company
-from Database import db
-from Database import add_company, create_db, company_exist
+from Database import create_db
+from datetime import datetime
+
 
 parser = Parser(debug=True)
 
 def parse_neti():
-    url = 'http://www.neti.ee/cgi-bin/teema/TERVIS/Iluteenindus/'
-    parser.parse_neti_companies_list(url=url)
-    company_list = Company.COMPANY_LIST
+    startTime = datetime.now()
     create_db()
-    for company in company_list:
-        if not company_exist(company):
-            url = 'http://www.neti.ee/visiitkaart/' + str(company.neti_id)
-            company_data= parser.parse_neti_company_page(url=url)
-            if company_data:
-                company.reg_code = company_data['reg_code']
-                company.KMKR = company_data['KMKR']
-                company.address = company_data['address']
-                company.email = company_data['email']
-                add_company(company)
-    db.close()
-
-
-
-
-
-def run_neti_parsing():
-    create_db()
-    parse_neti()
-
+    url = 'http://www.neti.ee/cgi-bin/teema/TERVIS/Meditsiin/'
+    parser.parse_neti_category(url=url)
     print("Parsing is done")
-
-run_neti_parsing()
+    execution_time = datetime.now() - startTime
+    print("Execution time is :{0}".format(execution_time))
+parse_neti()
