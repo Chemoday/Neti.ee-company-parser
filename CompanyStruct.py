@@ -1,11 +1,6 @@
-class Company(object):
-    COMPANY_LIST = []
-    reg_code = None
-    KMKR = None
-    address = None
-    email = None
+companies = []
 
-
+class CompanyStruct(object):
 
     def __init__(self, name, website, neti_id, category, sub_category=''):
         self.name = name
@@ -14,17 +9,13 @@ class Company(object):
         self.category = category
         self.sub_category = sub_category
         self.neti_url = 'http://www.neti.ee/visiitkaart/' + str(neti_id)
-        Company.COMPANY_LIST.append(self)
+        companies.append(self)
+
 
 
     def __repr__(self):
         return "Name: {name}\n" \
                "Site: {website}\n" \
-               "Neti_ID: {neti_id}\n" \
-               "Reg_Code:{code}\n" \
-               "Address: {address}\n" \
-               "Email: {email}\n" \
-               .format(name=self.name,code=self.reg_code,
-                                     address=self.address, email=self.email,
-                                     website=self.website, neti_id = self.neti_id )
+               "Neti_ID: {neti_id}\n".format(name=self.name, website=self.website,
+                       neti_id=self.neti_id, )
 

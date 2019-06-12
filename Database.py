@@ -1,6 +1,7 @@
 __author__ = 'chemoday'
 import datetime
 import peewee
+
 db = peewee.SqliteDatabase('company.db')
 db.connect()
 
@@ -8,6 +9,8 @@ class Utils(object):
     total_parsed=0
 
 class Company(peewee.Model):
+    total_saved = 0
+
     name = peewee.TextField(default="" , primary_key=True)
     website = peewee.TextField(default="", null=True)
     reg_code = peewee.TextField(null=True)
@@ -19,6 +22,16 @@ class Company(peewee.Model):
     class Meta:
         database = db
 
+    @staticmethod
+    def add_company(company):
+        try:
+            Company.insert(name=company.name, website=company.website, reg_code=company.reg_code,
+                           KMKR=company.KMKR, address=company.address, email=company.email,
+                           category=company.category, sub_category=company.sub_category).execute()
+            Utils.total_parsed+= 1
+            print("Saved: {0} | Session total:{1}".format(company.name, Utils.total_parsed))
+        except peewee.IntegrityError:
+            print("Eror with: {0}".format(company.name))
 
 def create_db():
     if not Company.table_exists():
@@ -35,15 +48,11 @@ def company_exist(company):
         print('Company:{0} NOT EXIST| email:{1}'.format(company.name, company.email))
         return False
 
-def add_company(company):
 
-    try:
-        row = Company(name=company.name, website=company.website, reg_code=company.reg_code,
-                              KMKR=company.KMKR, address=company.address, email=company.email,
-                              category=company.category, sub_category=company.sub_category)
-        row.save(force_insert=True)
-        Utils.total_parsed+=1
-        print("Saved: {0} | Session total:{1}".format(company.name, Utils.total_parsed))
-    except peewee.IntegrityError:
-        print("Eror with: {0}".format(company.name))
 
+def save_as_csv(category):
+    import pandas as pd
+    connection = db.connection()
+    sql = Company.select().where(Company.category == category).sql()
+    df = pd.read_sql(sql[0], connection, params=sql[1])
+    df.to_csv('csv/{0}.csv'.format(category))
