@@ -1,7 +1,3 @@
-Here's a README description for the GitHub project `Neti.ee-company-parser` based on the provided code:
-
----
-
 # Neti.ee Company Parser
 
 This project is a web scraping tool designed to extract and organize company data from the Estonian web directory, Neti.ee. The parser automates the process of gathering information such as registration codes, VAT numbers, addresses, and contact details from Neti.ee's business listings, and stores the data in a structured format using a database or CSV files.
