@@ -1,4 +1,11 @@
 # Neti.ee Company Parser
+Creating a Python parser to automatically check sites from the directory for SSL certificates and other security issues will help quickly identify companies with vulnerable sites.
+
+Advantages of the parser:
+Automation: The parser will be able to collect a large number of sites from the directory, which will save time on manual data collection.
+Scalability: You will be able to check hundreds and even thousands of sites at a time, getting a complete list of companies with SSL problems.
+Target audience: Using the parser, you can quickly find companies that need to renew their certificates and offer them services directly.
+Flexibility: In addition to checking SSL, you can add additional checks, for example, the presence of other security issues (many outdated technologies).
 
 This project is a web scraping tool designed to extract and organize company data from the Estonian web directory, Neti.ee. The parser automates the process of gathering information such as registration codes, VAT numbers, addresses, and contact details from Neti.ee's business listings, and stores the data in a structured format using a database or CSV files.
 
